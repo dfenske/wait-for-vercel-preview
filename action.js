@@ -279,6 +279,7 @@ const run = async () => {
   try {
     // Inputs
     const GITHUB_TOKEN = core.getInput('token', { required: true });
+    console.log(GITHUB_TOKEN);
     const VERCEL_PASSWORD = core.getInput('vercel_password');
     const ENVIRONMENT = core.getInput('environment');
     const MAX_TIMEOUT = Number(core.getInput('max_timeout')) || 60;
