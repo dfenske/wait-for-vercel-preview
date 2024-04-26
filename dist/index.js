@@ -223,10 +223,6 @@ const waitForDeploymentToStart = async ({
         sha,
         environment,
       });
-      console.log('deployments');
-      console.log(deployments);
-
-      console.log('actor name: ', actorName);
 
       const deployment =
         deployments.data.length > 0 &&
@@ -303,8 +299,6 @@ const run = async () => {
     }
 
     const octokit = github.getOctokit(GITHUB_TOKEN);
-    console.log('octokit');
-    console.log(octokit);
 
     const context = github.context;
     const owner = context.repo.owner;
@@ -330,9 +324,6 @@ const run = async () => {
       core.setFailed('Unable to determine SHA. Exiting...');
       return;
     }
-    
-    console.log('sha');
-    console.log(sha);
 
     // Get deployments associated with the pull request.
     const deployment = await waitForDeploymentToStart({
