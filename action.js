@@ -217,6 +217,10 @@ const waitForDeploymentToStart = async ({
         sha,
         environment,
       });
+      console.log('deployments');
+      console.log(deployments);
+
+      console.log('actor name: ', actorName);
 
       const deployment =
         deployments.data.length > 0 &&
@@ -279,14 +283,13 @@ const run = async () => {
   try {
     // Inputs
     const GITHUB_TOKEN = core.getInput('token', { required: true });
-    console.log(GITHUB_TOKEN);
     const VERCEL_PASSWORD = core.getInput('vercel_password');
     const ENVIRONMENT = core.getInput('environment');
     const MAX_TIMEOUT = Number(core.getInput('max_timeout')) || 60;
     const ALLOW_INACTIVE = Boolean(core.getInput('allow_inactive')) || false;
     const PATH = core.getInput('path') || '/';
     const CHECK_INTERVAL_IN_MS =
-      (Number(core.getInput('check_interval')) || 2) * 1000;
+      (Number(core.getInput('check_interval'))) * 1000;
 
     // Fail if we have don't have a github token
     if (!GITHUB_TOKEN) {
@@ -294,6 +297,8 @@ const run = async () => {
     }
 
     const octokit = github.getOctokit(GITHUB_TOKEN);
+    console.log('octokit');
+    console.log(octokit);
 
     const context = github.context;
     const owner = context.repo.owner;
@@ -314,11 +319,14 @@ const run = async () => {
     } else if (github.context.sha) {
       sha = github.context.sha;
     }
-
+    
     if (!sha) {
       core.setFailed('Unable to determine SHA. Exiting...');
       return;
     }
+    
+    console.log('sha');
+    console.log(sha);
 
     // Get deployments associated with the pull request.
     const deployment = await waitForDeploymentToStart({
